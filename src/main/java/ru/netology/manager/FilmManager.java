@@ -1,13 +1,13 @@
 package ru.netology.manager;
 
-
+import lombok.AllArgsConstructor;
 import ru.netology.domain.Film;
 
-import java.util.Arrays;
+//@AllArgsConstructor
 
 public class FilmManager {
+
     public Film[] movies = new Film[0];
-    private int howManyFilmsShouldToShow = 5;
 
     public Film[] add(Film movie) {
         int length = movies.length + 1;
@@ -18,10 +18,11 @@ public class FilmManager {
         int lastIndex = tmp.length - 1;
         tmp[lastIndex] = movie;
         movies = tmp;
+
         return tmp;
     }
 
-    public Film[] getAll() {
+    public Film[] getAll(Film[] movies) {
         Film[] result = new Film[movies.length];
         for (int i = 0; i < movies.length; i++) {
             int index = movies.length - i - 1;
@@ -30,9 +31,31 @@ public class FilmManager {
         return result;
     }
 
-    public Film[] showAddedFilms() {
-        for (int i = movies.length - 1; i > movies.length - howManyFilmsShouldToShow - 1; i--) {
+    private int limit = 10;
+
+    public FilmManager(int limit) {
+        this.limit = limit;
+    }
+
+    public FilmManager() {
+
+    }
+
+    public Film[] showNewMovies() {
+        int count = limit;
+        if (movies.length <= limit) {
+            count = movies.length;
         }
-        return new Film[0];
+        Film[] result = new Film[count];
+        for (int i = 0; i < count; i++) {
+            int index = movies.length - 1 - i;
+            result[i] = movies[index];
+        }
+        return result;
     }
 }
+
+
+
+
+
